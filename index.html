@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheatsheet — 4. čtvrtletní písemná práce (kvinta)</title>
+
+<!-- KaTeX CSS + JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false},
+      {left: '\\(', right: '\\)', display: false},
+      {left: '\\[', right: '\\]', display: true}
+    ],
+    throwOnError: false
+  });"></script>
+
+<style>
+  /* Světlý režim (výchozí) */
+  :root, :root[data-theme="light"] {
+    --bg: #fafafa;
+    --fg: #1a1a1a;
+    --muted: #555;
+    --accent: #1f4e79;
+    --accent-2: #2e75b6;
+    --warn: #c00000;
+    --ok: #70ad47;
+    --card: #ffffff;
+    --card-hover: #f5f8fc;
+    --border: #e0e0e0;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-open: 0 2px 10px rgba(0,0,0,0.08);
+    --box-bg: #f3f6fa;
+    --example-bg: rgba(46,117,182,0.05);
+    --example-alt-bg: rgba(143, 216, 106, 0.10);
+  }
+  /* Automatický tmavý režim (pokud uživatel explicitně nevybral motiv) */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --bg: #121212;
+      --fg: #ececec;
+      --muted: #a0a0a0;
+      --accent: #6cb4ff;
+      --accent-2: #4ea6ff;
+      --warn: #ff6b6b;
+      --ok: #8fd86a;
+      --card: #1e1e1e;
+      --card-hover: #262626;
+      --border: #333;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-open: 0 2px 10px rgba(0,0,0,0.5);
+      --box-bg: #1a2330;
+      --example-bg: rgba(108, 180, 255, 0.08);
+      --example-alt-bg: rgba(143, 216, 106, 0.10);
+    }
+  }
+  /* Explicitně zvolený tmavý režim */
+  :root[data-theme="dark"] {
+    --bg: #121212;
+    --fg: #ececec;
+    --muted: #a0a0a0;
+    --accent: #6cb4ff;
+    --accent-2: #4ea6ff;
+    --warn: #ff6b6b;
+    --ok: #8fd86a;
+    --card: #1e1e1e;
+    --card-hover: #262626;
+    --border: #333;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+    --shadow-open: 0 2px 10px rgba(0,0,0,0.5);
+    --box-bg: #1a2330;
+    --example-bg: rgba(108, 180, 255, 0.08);
+    --example-alt-bg: rgba(143, 216, 106, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    margin: 0 auto;
+    max-width: 780px;
+    padding: 0 0.9rem 4rem;
+    line-height: 1.5;
+    font-size: 16px;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 0.9rem 0 0.6rem;
+    border-bottom: 1px solid var(--border);
+    z-index: 10;
+    margin: 0 -0.9rem 0.9rem;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+  header h1 {
+    font-size: 1.15rem;
+    margin: 0 0 0.3rem;
+    color: var(--accent);
+  }
+  header .sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .controls {
+    display: flex;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    flex-wrap: wrap;
+  }
+  .controls button {
+    background: var(--card);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .controls button:hover { background: var(--card-hover); }
+  .controls button:active { background: var(--accent); color: white; }
+
+  details.topic {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.7rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  details.topic[open] { box-shadow: var(--shadow-open); }
+  details.topic > summary {
+    padding: 0.85rem 2.2rem 0.85rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    list-style: none;
+    position: relative;
+    user-select: none;
+    background: var(--card);
+  }
+  details.topic > summary:hover { background: var(--card-hover); }
+  details.topic > summary::-webkit-details-marker { display: none; }
+  details.topic > summary::after {
+    content: "▸";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.18s ease;
+    color: var(--accent-2);
+    font-size: 0.9rem;
+  }
+  details.topic[open] > summary::after { transform: translateY(-50%) rotate(90deg); }
+
+  details.topic > summary .num {
+    display: inline-block;
+    min-width: 1.8em;
+    color: var(--accent-2);
+    font-weight: 700;
+  }
+
+  .content {
+    padding: 0.2rem 1rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    margin: 0.9rem 0 0.4rem;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  p, ul { margin: 0.35rem 0; }
+  ul { padding-left: 1.3rem; }
+  li { margin: 0.15rem 0; }
+
+  .eq {
+    margin: 0.5rem 0;
+    padding: 0.45rem 0.6rem;
+    background: rgba(127,127,127,0.06);
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  .eq .katex { font-size: 1.05em; }
+  .eq.center { text-align: center; }
+
+  .warn {
+    margin: 0.6rem 0;
+    padding: 0.5rem 0.7rem 0.5rem 2.2rem;
+    position: relative;
+    background: rgba(192,0,0,0.08);
+    border-left: 3px solid var(--warn);
+    border-radius: 4px;
+    font-size: 0.92rem;
+  }
+  .warn::before {
+    content: "⚠";
+    position: absolute;
+    left: 0.5rem;
+    top: 0.45rem;
+    color: var(--warn);
+    font-weight: bold;
+  }
+  .warn strong { color: var(--warn); }
+
+  .example {
+    border-left: 3px solid var(--accent-2);
+    padding: 0.4rem 0.7rem;
+    margin: 0.4rem 0;
+    background: var(--example-bg);
+    border-radius: 4px;
+    font-size: 0.94rem;
+  }
+  .example .label { font-weight: 600; color: var(--accent-2); }
+
+  /* Odlišený blok pro připomenutí dřívějšího učiva */
+  .demo {
+    border-left: 3px solid var(--ok);
+    padding: 0.4rem 0.7rem;
+    margin: 0.4rem 0 0.6rem;
+    background: var(--example-alt-bg);
+    border-radius: 4px;
+    font-size: 0.94rem;
+  }
+  .demo .label { font-weight: 600; color: var(--ok); }
+  .demo-title {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ok);
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.45rem;
+    text-align: center;
+  }
+  th { background: rgba(127,127,127,0.08); font-weight: 600; }
+
+  code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.92em;
+    background: rgba(127,127,127,0.1);
+    padding: 0.05rem 0.25rem;
+    border-radius: 3px;
+  }
+
+  /* Přepínač motivu */
+  .theme-toggle {
+    background: var(--card);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .theme-toggle:hover { background: var(--card-hover); }
+
+  footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  /* =========================================================
+     FLASHCARDS — inline karty + náhodné vylosování
+     ========================================================= */
+  :root, :root[data-theme="light"] {
+    --fc-K: #2e75b6;   /* Konkrétní */
+    --fc-D: #548235;   /* Definiční */
+    --fc-P: #bf8f00;   /* Postup */
+    --fc-W: #c00000;   /* Pozor */
+    --fc-back-bg: #f5faff;
+    --fc-back-fg: #1a1a1a;
+  }
+  :root[data-theme="dark"] {
+    --fc-K: #6cb4ff;
+    --fc-D: #8fd86a;
+    --fc-P: #ffc857;
+    --fc-W: #ff6b6b;
+    --fc-back-bg: #21303f;
+    --fc-back-fg: #ececec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --fc-K: #6cb4ff; --fc-D: #8fd86a; --fc-P: #ffc857; --fc-W: #ff6b6b;
+      --fc-back-bg: #21303f; --fc-back-fg: #ececec;
+    }
+  }
+
+  .flash-section {
+    margin-top: 1.1rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--border);
+  }
+  .flash-section > h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .flash-section > h3::before { content: "🗂"; font-size: 1rem; }
+  .flash-section .flash-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0 0 0.5rem;
+  }
+  .flash-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.55rem;
+  }
+  .flash-card {
+    perspective: 900px;
+    height: 150px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .flash-card .fc-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.45s ease;
+  }
+  .flash-card.flipped .fc-inner { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 0.6rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    font-size: 0.88rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .fc-front {
+    background: var(--card);
+    color: var(--fg);
+    border-left: 4px solid var(--border);
+  }
+  .fc-back {
+    background: var(--fc-back-bg);
+    color: var(--fc-back-fg);
+    transform: rotateY(180deg);
+  }
+  .fc-type {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+  .fc-q { flex: 1; font-weight: 500; line-height: 1.35; }
+  .fc-a { flex: 1; line-height: 1.35; }
+  .fc-hint {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    text-align: right;
+    font-style: italic;
+  }
+  .flash-card[data-type="K"] .fc-front { border-left-color: var(--fc-K); }
+  .flash-card[data-type="D"] .fc-front { border-left-color: var(--fc-D); }
+  .flash-card[data-type="P"] .fc-front { border-left-color: var(--fc-P); }
+  .flash-card[data-type="W"] .fc-front { border-left-color: var(--fc-W); }
+  .flash-card[data-type="K"] .fc-type { color: var(--fc-K); }
+  .flash-card[data-type="D"] .fc-type { color: var(--fc-D); }
+  .flash-card[data-type="P"] .fc-type { color: var(--fc-P); }
+  .flash-card[data-type="W"] .fc-type { color: var(--fc-W); }
+
+  .fc-random-btn {
+    background: var(--accent);
+    color: #fff !important;
+    border: 1px solid var(--accent) !important;
+    font-weight: 600;
+  }
+  .fc-random-btn:hover { background: var(--accent-2); border-color: var(--accent-2) !important; }
+
+  /* Modal pro náhodnou otázku */
+  .fc-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 100;
+  }
+  .fc-modal.open { display: flex; }
+  .fc-modal-card {
+    background: var(--card);
+    color: var(--fg);
+    border-radius: 12px;
+    max-width: 520px;
+    width: 100%;
+    padding: 1rem 1.1rem 0.9rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    border: 1px solid var(--border);
+  }
+  .fc-modal-card .fc-section-ref {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  .fc-modal-card .fc-type { margin-bottom: 0.35rem; }
+  .fc-modal-card .fc-q { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.8rem; line-height: 1.4; }
+  .fc-modal-card .fc-a { font-size: 0.98rem; color: var(--muted); line-height: 1.4; padding: 0.6rem 0.7rem; background: var(--fc-back-bg); border-radius: 8px; display: none; }
+  .fc-modal-card .fc-a.show { display: block; color: var(--fc-back-fg); }
+  .fc-modal-actions {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .fc-modal-actions button {
+    background: var(--card);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+  .fc-modal-actions button:hover { background: var(--card-hover); }
+  .fc-modal-actions .primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .fc-modal-actions .primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+
+  @media (max-width: 520px) {
+    .flash-deck { grid-template-columns: 1fr; }
+    .flash-card { height: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Cheatsheet — 4. čtvrtletní písemná práce</h1>
+  <div class="sub">Matematika · iracionální rovnice · soustavy · rovnice s parametrem · kvinta</div>
+  <div class="controls">
+    <button onclick="document.querySelectorAll('details.topic').forEach(d=>d.open=true)">Rozbalit vše</button>
+    <button onclick="document.querySelectorAll('details.topic').forEach(d=>d.open=false)">Sbalit vše</button>
+    <button class="fc-random-btn" id="fcRandomBtn" title="Náhodná otázka ze všech sekcí">🎲 Náhodná otázka</button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Přepnout motiv" title="Přepnout světlý / tmavý režim">
+      <span id="themeIcon">🌙</span><span id="themeLabel">Tmavý</span>
+    </button>
+  </div>
+</header>
+
+<script>
+(function() {
+  // Inicializace — načti uloženou preferenci, jinak auto (dle systému)
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem('cheatsheet-kvinta-theme'); } catch (e) {}
+  if (stored === 'dark' || stored === 'light') {
+    root.setAttribute('data-theme', stored);
+  }
+
+  function currentTheme() {
+    var attr = root.getAttribute('data-theme');
+    if (attr) return attr;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function updateToggle() {
+    var t = currentTheme();
+    var icon = document.getElementById('themeIcon');
+    var label = document.getElementById('themeLabel');
+    if (t === 'dark') {
+      icon.textContent = '☀';
+      label.textContent = 'Světlý';
+    } else {
+      icon.textContent = '🌙';
+      label.textContent = 'Tmavý';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updateToggle();
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('cheatsheet-kvinta-theme', next); } catch (e) {}
+      updateToggle();
+    });
+  });
+})();
+</script>
+
+<main>
+
+<!-- ================================================================= -->
+<!-- 1) IRACIONÁLNÍ ROVNICE                                              -->
+<!-- ================================================================= -->
+<details class="topic" id="s1">
+  <summary><span class="num">1)</span> Iracionální rovnice — neznámá pod odmocninou</summary>
+  <div class="content">
+
+    <h3>O co jde</h3>
+    <p>Rovnice, ve kterých se neznámá vyskytuje <strong>pod odmocninou</strong>. Odmocniny se zbavíme <strong>umocněním obou stran</strong>.</p>
+    <div class="warn">Umocnění <strong>není ekvivalentní úprava</strong> — může přidat falešné kořeny. Z nepravdivého $2 = -2$ vznikne umocněním pravdivé $4 = 4$. Proto je nutná kontrola.</div>
+
+    <div class="demo">
+      <span class="demo-title">Připomenutí — podmínky</span>
+      <p>Výraz pod druhou odmocninou musí být $\ge 0$. Samotná odmocnina je vždy $\ge 0$ — nemůže se rovnat zápornému číslu.</p>
+    </div>
+
+    <h3>Postup — umocnění a zkouška</h3>
+    <ul>
+      <li>Osamostatni odmocninu na jedné straně rovnice.</li>
+      <li>Umocni obě strany — zbavíš se odmocniny.</li>
+      <li>Vyřeš vzniklou rovnici (často kvadratickou).</li>
+      <li><strong>Zkouška:</strong> každý kořen dosaď do <em>původní</em> rovnice; falešné vyřaď.</li>
+    </ul>
+    <div class="warn">Zkouška u iracionální rovnice <strong>není volitelná</strong> — je součástí řešení. Je-li jedna strana zjevně záporná a druhá (odmocnina) nezáporná, rovnice nemá řešení.</div>
+
+    <h3>Dvě odmocniny</h3>
+    <p>Osamostatni jednu odmocninu, umocni; poté osamostatni zbylou odmocninu a umocni znovu.</p>
+
+    <div class="example">
+      <p><span class="label">Ukázka — jedna odmocnina:</span> řeš v $\mathbb{R}$ rovnici $\sqrt{x+3} = x-3$.</p>
+      <div class="eq center">$x+3 = (x-3)^2 = x^2-6x+9$</div>
+      <div class="eq center">$x^2-7x+6=0 \;\Rightarrow\; (x-1)(x-6)=0 \;\Rightarrow\; x=1 \ \text{nebo}\ x=6$</div>
+      <p>Zkouška $x=1$: &nbsp;$\sqrt{4}=2$, ale $x-3=-2$ &nbsp;→&nbsp; $2 \ne -2$ &nbsp;→&nbsp; <strong>falešný kořen</strong>.</p>
+      <p>Zkouška $x=6$: &nbsp;$\sqrt{9}=3$, &nbsp;$x-3=3$ &nbsp;→&nbsp; $3=3$ ✓</p>
+      <div class="eq center">$K=\{6\}$</div>
+    </div>
+
+    <div class="example">
+      <p><span class="label">Ukázka — dvě odmocniny:</span> řeš v $\mathbb{R}$ rovnici $\sqrt{x+5} - \sqrt{x} = 1$.</p>
+      <p>Osamostatním první odmocninu: &nbsp;$\sqrt{x+5} = 1 + \sqrt{x}$.</p>
+      <p>Umocním obě strany: &nbsp;$x+5 = (1+\sqrt{x})^2 = 1 + 2\sqrt{x} + x$.</p>
+      <p>Zbylou odmocninu osamostatním a umocním znovu: &nbsp;$5 = 1 + 2\sqrt{x} \Rightarrow \sqrt{x} = 2 \Rightarrow x=4$.</p>
+      <p>Zkouška: &nbsp;$\sqrt{9} - \sqrt{4} = 3 - 2 = 1$ ✓</p>
+      <div class="eq center">$K=\{4\}$</div>
+    </div>
+
+    <div class="flash-section" id="fc-s1">
+      <h3>Flashcards — procvič se</h3>
+      <p class="flash-note">Klikni na kartu pro odpověď. Každá karta má typ: <span style="color:var(--fc-K);font-weight:600">Konkrétní</span>, <span style="color:var(--fc-D);font-weight:600">Definiční</span>, <span style="color:var(--fc-P);font-weight:600">Postup</span>, <span style="color:var(--fc-W);font-weight:600">Pozor</span>.</p>
+      <div class="flash-deck">
+        <div class="flash-card" data-type="D" data-section="s1" data-card-idx="0" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Co je iracionální rovnice?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">Rovnice, ve které se neznámá vyskytuje pod odmocninou.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s1" data-card-idx="1" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Proč umocnění obou stran není ekvivalentní úprava?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Může přidat falešné kořeny — z nepravdivého $2=-2$ vznikne umocněním pravdivé $4=4$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s1" data-card-idx="2" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Je u iracionální rovnice zkouška povinná?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Ano — je součástí řešení. Bez ní neodhalíš falešné kořeny.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s1" data-card-idx="3" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak postupuješ u rovnice se dvěma odmocninami?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Osamostatníš jednu odmocninu a umocníš; pak osamostatníš zbylou odmocninu a umocníš znovu.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s1" data-card-idx="4" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Má rovnice $\sqrt{x+1}=-2$ řešení?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">Ne — odmocnina je vždy $\ge 0$, nemůže se rovnat zápornému číslu. $K=\emptyset$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s1" data-card-idx="5" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Po umocnění vyšlo $x=2$ i $x=5$; zkouška projde jen pro $x=5$. Co s $x=2$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">Je to falešný kořen — vyřadíš ho.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s1" data-card-idx="6" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jaký je první krok u rovnice $\sqrt{2x-1}=x-2$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Odmocnina už je osamostatněná — umocníš obě strany: $2x-1=(x-2)^2$.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ================================================================= -->
+<!-- 2) SUBSTITUCE                                                       -->
+<!-- ================================================================= -->
+<details class="topic" id="s2">
+  <summary><span class="num">2)</span> Substituce — nová neznámá za opakující se výraz</summary>
+  <div class="content">
+
+    <h3>O co jde</h3>
+    <p>Za <strong>opakující se výraz</strong> zavedeme novou neznámou — složitá rovnice se promění na jednodušší, obvykle kvadratickou.</p>
+
+    <div class="demo">
+      <span class="demo-title">Připomenutí — kvadratická rovnice</span>
+      <div class="eq center">$ax^2+bx+c=0,\qquad D=b^2-4ac,\qquad x_{1,2}=\dfrac{-b\pm\sqrt{D}}{2a}$</div>
+      <p>$D>0$ dva kořeny · $D=0$ jeden · $D<0$ žádný reálný. Jednodušší rovnice lze rozložit přímo na součin.</p>
+    </div>
+
+    <h3>Bikvadratická rovnice $ax^4+bx^2+c=0$</h3>
+    <ul>
+      <li>Substituce $y=x^2$ (potom nutně $y\ge 0$).</li>
+      <li>Vyřeš kvadratickou rovnici $ay^2+by+c=0$.</li>
+      <li>Pro každé $y$ se vrať: $x^2=y \;\Rightarrow\; x=\pm\sqrt{y}$.</li>
+    </ul>
+    <div class="warn">Vyjde-li $y<0$, rovnice $x^2=y$ nemá reálné řešení — takové $y$ <strong>zahoď</strong>. A vždy se vrať od pomocné neznámé $y$ zpět k původní $x$.</div>
+
+    <h3>Obecná substituce</h3>
+    <p>Hledej výraz, který se v rovnici <strong>opakuje</strong> — zlomek, závorku, odmocninu. Označ ho $t$ a celou rovnici přepiš v $t$. Po vyřešení dosaď zpět a dopočítej $x$.</p>
+    <div class="warn">Obsahuje-li substituovaný výraz zlomek nebo odmocninu, nezapomeň na podmínky a na zkoušku.</div>
+
+    <div class="example">
+      <p><span class="label">Ukázka:</span> řeš v $\mathbb{R}$ rovnici $x^4-5x^2+4=0$.</p>
+      <p>Substituce $y=x^2$: &nbsp; $y^2-5y+4=0 \;\Rightarrow\; (y-1)(y-4)=0$.</p>
+      <p>$y=1$ nebo $y=4$ — obě $\ge 0$, obě platí.</p>
+      <div class="eq center">$x^2=1 \Rightarrow x=\pm 1 \qquad x^2=4 \Rightarrow x=\pm 2$</div>
+      <div class="eq center">$K=\{-2,\,-1,\,1,\,2\}$</div>
+    </div>
+
+    <div class="flash-section" id="fc-s2">
+      <h3>Flashcards — procvič se</h3>
+      <p class="flash-note">Klikni na kartu pro odpověď. Každá karta má typ: <span style="color:var(--fc-K);font-weight:600">Konkrétní</span>, <span style="color:var(--fc-D);font-weight:600">Definiční</span>, <span style="color:var(--fc-P);font-weight:600">Postup</span>, <span style="color:var(--fc-W);font-weight:600">Pozor</span>.</p>
+      <div class="flash-deck">
+        <div class="flash-card" data-type="D" data-section="s2" data-card-idx="0" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Co je substituce?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">Zavedení nové neznámé za opakující se výraz — složitá rovnice se zjednoduší, obvykle na kvadratickou.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s2" data-card-idx="1" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak řešíš bikvadratickou rovnici $ax^4+bx^2+c=0$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Substituce $y=x^2$, vyřešíš kvadratickou rovnici v $y$, vrátíš se: $x=\pm\sqrt{y}$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s2" data-card-idx="2" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Co uděláš, když u substituce $y=x^2$ vyjde $y<0$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Zahodíš ho — $x^2$ nemůže být záporné, reálné $x$ neexistuje.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s2" data-card-idx="3" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Nejčastější chyba u substituce?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Zapomenout se vrátit od pomocné neznámé $y$ k původní $x$. $y$ není konečná odpověď.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s2" data-card-idx="4" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Substituce $y=x^2$ dala $y=16$. Jaká jsou $x$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">$x=4$ a $x=-4$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s2" data-card-idx="5" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Bikvadratická rovnice má v $y$ dva různé kladné kořeny. Kolik řešení v $x$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">Čtyři — ke každému $y$ patří $\pm\sqrt{y}$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s2" data-card-idx="6" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak poznáš, co v rovnici substituovat?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Hledáš výraz, který se v rovnici opakuje — závorku, zlomek, odmocninu.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ================================================================= -->
+<!-- 3) SOUSTAVY LINEÁRNÍCH ROVNIC                                       -->
+<!-- ================================================================= -->
+<details class="topic" id="s3">
+  <summary><span class="num">3)</span> Soustavy lineárních rovnic</summary>
+  <div class="content">
+
+    <div class="warn">Každou rovnici nejprve uprav do co nejjednoduššího tvaru: roznásob závorky, zbav se zlomků, sečti stejné členy.</div>
+
+    <h3>Dvě rovnice o dvou neznámých — tři metody</h3>
+    <ul>
+      <li><strong>Dosazovací</strong> — z jedné rovnice vyjádři jednu neznámou, dosaď do druhé.</li>
+      <li><strong>Srovnávací</strong> — z obou rovnic vyjádři tutéž neznámou, výrazy polož sobě rovny.</li>
+      <li><strong>Sčítací</strong> — rovnice vynásob tak, aby koeficienty u jedné neznámé byly opačné, a sečti je.</li>
+    </ul>
+    <p>Výsledek: jedno řešení $K=\{[x;y]\}$ · žádné řešení $K=\emptyset$ (vznikne např. $0=4$) · nekonečně mnoho řešení (vznikne $0=0$).</p>
+
+    <div class="example">
+      <p><span class="label">Ukázka — sčítací metoda:</span></p>
+      <div class="eq center">$\begin{cases} 3x+2y=8 \\ 5x-2y=8 \end{cases}$</div>
+      <p>Sečtu rovnice ($2y$ a $-2y$ se vyruší): &nbsp;$8x=16 \Rightarrow x=2$.</p>
+      <p>Dosadím: $3\cdot 2+2y=8 \Rightarrow y=1$. &nbsp;&nbsp; $K=\{[2;\,1]\}$</p>
+    </div>
+
+    <h3>Tři rovnice o třech neznámých — Gaussova eliminace</h3>
+    <p>Cíl: přičítáním vhodných násobků rovnic dostat soustavu do <strong>schodovitého (trojúhelníkového)</strong> tvaru, kde poslední rovnice má jen jednu neznámou. Pak dopočítej zpětně.</p>
+    <ul>
+      <li>Pomocí 1. rovnice vyeliminuj $x$ z 2. a 3. rovnice.</li>
+      <li>Pomocí nové 2. rovnice vyeliminuj $y$ ze 3. rovnice.</li>
+      <li>Z poslední rovnice spočítej $z$, zpětně dosaď $y$, pak $x$.</li>
+    </ul>
+    <p><strong>Zápis maticí:</strong> soustavu lze psát jako rozšířenou matici koeficientů — pracuješ jen s čísly, každý řádek matice odpovídá jedné rovnici.</p>
+
+    <div class="example">
+      <p><span class="label">Ukázka — 3×3 (Gaussova eliminace, maticový zápis):</span></p>
+      <div class="eq center">$\begin{cases} x+y+z=6 \\ x-y+2z=5 \\ 2x+y-z=1 \end{cases}$</div>
+      <p>Zapíšu jako rozšířenou matici (svislá čára odděluje koeficienty od pravé strany):</p>
+      <div class="eq center">$\left(\begin{array}{ccc|c} 1 & 1 & 1 & 6 \\ 1 & -1 & 2 & 5 \\ 2 & 1 & -1 & 1 \end{array}\right)$</div>
+      <p>$R_2 \to R_2 - R_1,\quad R_3 \to R_3 - 2R_1$ &nbsp;(vyeliminuju $x$ z 2. a 3. řádku):</p>
+      <div class="eq center">$\left(\begin{array}{ccc|c} 1 & 1 & 1 & 6 \\ 0 & -2 & 1 & -1 \\ 0 & -1 & -3 & -11 \end{array}\right)$</div>
+      <p>$R_3 \to 2R_3 - R_2$ &nbsp;(vyeliminuju $y$ ze 3. řádku):</p>
+      <div class="eq center">$\left(\begin{array}{ccc|c} 1 & 1 & 1 & 6 \\ 0 & -2 & 1 & -1 \\ 0 & 0 & -7 & -21 \end{array}\right)$</div>
+      <p>Schodovitý tvar. Zpětně: &nbsp;$-7z=-21 \Rightarrow z=3$; &nbsp; $-2y+3=-1 \Rightarrow y=2$; &nbsp; $x+2+3=6 \Rightarrow x=1$.</p>
+      <div class="eq center">$K=\{[1;\,2;\,3]\}$</div>
+    </div>
+
+    <h3>Jiný počet rovnic a neznámých</h3>
+    <ul>
+      <li><strong>Tři rovnice o dvou neznámých (přeurčená).</strong> Vyřeš soustavu ze dvou rovnic a výsledek dosaď do třetí. Sedí-li → řešení platí; nesedí-li → soustava nemá řešení.</li>
+      <li><strong>Dvě rovnice o třech neznámých (nedourčená).</strong> Rovnic je méně než neznámých → jednu neznámou zvol jako parametr ($z=t$) a ostatní vyjádři pomocí $t$. Nekonečně mnoho řešení — zapiš obecně.</li>
+    </ul>
+    <div class="warn">Počet rovnic vs. neznámých napoví, co čekat: stejně → většinou jedno řešení; více rovnic → hrozí spor; méně rovnic → nekonečně mnoho řešení (parametr).</div>
+
+    <div class="example">
+      <p><span class="label">Ukázka — tři rovnice o dvou neznámých:</span></p>
+      <div class="eq center">$\begin{cases} x+y=5 \\ 2x-y=1 \\ 3x+y=9 \end{cases}$</div>
+      <p>Vyřeším soustavu ze (1) a (2) — sečtu rovnice: &nbsp;$3x=6 \Rightarrow x=2$; &nbsp;pak $y=5-2=3$.</p>
+      <p>Dosadím do (3) jako kontrolu: &nbsp;$3\cdot 2+3 = 9$ ✓ — sedí, řešení platí.</p>
+      <div class="eq center">$K=\{[2;\,3]\}$</div>
+      <p style="color:var(--muted);font-size:0.85rem;margin-top:.3rem;">Kdyby dosazení do třetí rovnice nesedělo, soustava nemá řešení, $K=\emptyset$.</p>
+    </div>
+
+    <div class="example">
+      <p><span class="label">Ukázka — dvě rovnice o třech neznámých:</span></p>
+      <div class="eq center">$\begin{cases} x-y+z=2 \\ x+y-z=4 \end{cases}$</div>
+      <p>Sečtu rovnice: &nbsp;$2x=6 \Rightarrow x=3$. &nbsp; Odečtu (1) od (2): &nbsp;$2y-2z=2 \Rightarrow y=z+1$.</p>
+      <p>$z$ zvolím jako parametr: &nbsp;$z=t,\ t\in\mathbb{R}$. &nbsp; Pak $y=t+1$, &nbsp;$x=3$.</p>
+      <div class="eq center">$K=\{[3;\,t+1;\,t]\ \mid\ t\in\mathbb{R}\}$</div>
+    </div>
+
+    <div class="flash-section" id="fc-s3">
+      <h3>Flashcards — procvič se</h3>
+      <p class="flash-note">Klikni na kartu pro odpověď. Každá karta má typ: <span style="color:var(--fc-K);font-weight:600">Konkrétní</span>, <span style="color:var(--fc-D);font-weight:600">Definiční</span>, <span style="color:var(--fc-P);font-weight:600">Postup</span>, <span style="color:var(--fc-W);font-weight:600">Pozor</span>.</p>
+      <div class="flash-deck">
+        <div class="flash-card" data-type="D" data-section="s3" data-card-idx="0" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Jaké jsou tři metody řešení soustavy dvou rovnic o dvou neznámých?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">Dosazovací, srovnávací a sčítací.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s3" data-card-idx="1" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Co je cílem Gaussovy eliminace?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Dostat soustavu do schodovitého (trojúhelníkového) tvaru — poslední rovnice pak má jen jednu neznámou.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s3" data-card-idx="2" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Při řešení soustavy vyjde $0=0$. Co to znamená?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">Soustava má nekonečně mnoho řešení.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s3" data-card-idx="3" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Při řešení soustavy vyjde $0=5$. Co to znamená?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">Soustava nemá řešení, $K=\emptyset$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s3" data-card-idx="4" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak řešíš tři rovnice o dvou neznámých?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Vyřešíš soustavu ze dvou rovnic, výsledek dosadíš do třetí. Sedí → platí; nesedí → řešení není.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s3" data-card-idx="5" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak řešíš dvě rovnice o třech neznámých?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Jednu neznámou zvolíš jako parametr, ostatní vyjádříš pomocí něj — nekonečně mnoho řešení.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s3" data-card-idx="6" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Co uděláš s každou rovnicí, než zvolíš metodu?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Zjednodušíš ji — roznásobíš závorky, zbavíš se zlomků, sečteš stejné členy.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="D" data-section="s3" data-card-idx="7" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Jak zapíšeš výsledek soustavy tří rovnic o třech neznámých?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">$K=\{[x;y;z]\}$.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ================================================================= -->
+<!-- 4) SOUSTAVY NELINEÁRNÍ                                              -->
+<!-- ================================================================= -->
+<details class="topic" id="s4">
+  <summary><span class="num">4)</span> Soustavy nelineární — s kvadratikou a absolutní hodnotou</summary>
+  <div class="content">
+
+    <h3>Lineární + kvadratická rovnice</h3>
+    <p>Jedna rovnice bývá přímka, druhá kuželosečka (kružnice, elipsa, parabola).</p>
+    <ul>
+      <li>Z <strong>lineární</strong> rovnice vyjádři jednu neznámou.</li>
+      <li>Dosaď do kvadratické → vznikne kvadratická rovnice o jedné neznámé.</li>
+      <li>Vyřeš ji (přes $D$); pro každý kořen dopočítej druhou neznámou z lineární rovnice.</li>
+    </ul>
+    <div class="warn">Vyjadřuj vždy z <strong>lineární</strong> rovnice — dosazením vznikne jedna pěkná kvadratická rovnice. Řešením je 0, 1 nebo 2 dvojice $[x;y]$ — geometricky kolikrát přímka protne křivku.</div>
+
+    <div class="example">
+      <p><span class="label">Ukázka — přímka a kružnice:</span></p>
+      <div class="eq center">$\begin{cases} x+y=6 \\ x^2+y^2=20 \end{cases}$</div>
+      <p>Z přímky $y=6-x$. Dosadím: $x^2+(6-x)^2=20$.</p>
+      <div class="eq center">$2x^2-12x+16=0 \;\Rightarrow\; x^2-6x+8=0 \;\Rightarrow\; (x-2)(x-4)=0$</div>
+      <p>$x=2 \Rightarrow y=4$; &nbsp; $x=4 \Rightarrow y=2$. &nbsp;&nbsp; $K=\{[2;\,4],\,[4;\,2]\}$</p>
+    </div>
+
+    <h3>Soustavy s absolutní hodnotou</h3>
+    <p>$|A|$ znamená <strong>dva případy</strong> podle znaménka výrazu uvnitř: pro $A\ge 0$ je $|A|=A$; pro $A<0$ je $|A|=-A$.</p>
+    <ul>
+      <li>Rozděl řešení na případy podle znaménka výrazu uvnitř $|\cdot|$.</li>
+      <li>V každém případě nahraď absolutní hodnotu a vyřeš vzniklou soustavu.</li>
+      <li>U každého výsledku ověř, zda splňuje <strong>podmínku</strong> daného případu.</li>
+    </ul>
+    <div class="warn">Každý případ má svou podmínku platnosti. Výsledek, který ji nesplňuje, do daného případu <strong>nepatří</strong> — i kdyby čísla „vyšla" — a musíš ho vyřadit.</div>
+
+    <div class="example">
+      <p><span class="label">Ukázka — absolutní hodnota:</span></p>
+      <div class="eq center">$\begin{cases} y=|x|-2 \\ x+2y=2 \end{cases}$</div>
+      <p><strong>Případ $x\ge 0$:</strong> &nbsp;$|x|=x$, tedy $y=x-2$. Dosadím: $x+2(x-2)=2 \Rightarrow x=2$ &nbsp;($\ge 0$ ✓), &nbsp;$y=0$.</p>
+      <p><strong>Případ $x<0$:</strong> &nbsp;$|x|=-x$, tedy $y=-x-2$. Dosadím: $x+2(-x-2)=2 \Rightarrow x=-6$ &nbsp;($<0$ ✓), &nbsp;$y=4$.</p>
+      <div class="eq center">$K=\{[2;\,0],\,[-6;\,4]\}$</div>
+    </div>
+
+    <div class="flash-section" id="fc-s4">
+      <h3>Flashcards — procvič se</h3>
+      <p class="flash-note">Klikni na kartu pro odpověď. Každá karta má typ: <span style="color:var(--fc-K);font-weight:600">Konkrétní</span>, <span style="color:var(--fc-D);font-weight:600">Definiční</span>, <span style="color:var(--fc-P);font-weight:600">Postup</span>, <span style="color:var(--fc-W);font-weight:600">Pozor</span>.</p>
+      <div class="flash-deck">
+        <div class="flash-card" data-type="P" data-section="s4" data-card-idx="0" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Soustava přímka + kuželosečka — z které rovnice vyjadřuješ neznámou?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Z lineární — dosazením vznikne jedna pěkná kvadratická rovnice o jedné neznámé.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s4" data-card-idx="1" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Kolik řešení může mít soustava přímka + kružnice?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">0, 1 nebo 2 dvojice — geometricky kolikrát přímka protne kružnici.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="D" data-section="s4" data-card-idx="2" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Co znamená $|A|$ při řešení soustavy?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">Dva případy: pro $A\ge 0$ je $|A|=A$, pro $A<0$ je $|A|=-A$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s4" data-card-idx="3" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak řešíš soustavu s absolutní hodnotou?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Rozdělíš na případy podle znaménka výrazu uvnitř $|\cdot|$, každý vyřešíš a ověříš podmínku případu.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s4" data-card-idx="4" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Co s výsledkem, který nesplňuje podmínku svého případu?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Vyřadíš ho — do daného případu nepatří, i když čísla „vyšla“.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s4" data-card-idx="5" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">V případu $x\ge 0$ vyšlo $x=-4$. Platí toto řešení?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">Ne — nesplňuje podmínku $x\ge 0$, do tohoto případu nepatří.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s4" data-card-idx="6" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Z které rovnice u soustavy přímka + kvadratika nevyjadřovat?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Z kvadratické — vznikl by chaos. Vždy vyjadřuj z lineární rovnice.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ================================================================= -->
+<!-- 5) LINEÁRNÍ ROVNICE S PARAMETREM                                    -->
+<!-- ================================================================= -->
+<details class="topic" id="s5">
+  <summary><span class="num">5)</span> Lineární rovnice s parametrem</summary>
+  <div class="content">
+
+    <h3>O co jde</h3>
+    <p>Neznámá $x$ je to, co hledáme. <strong>Parametr</strong> je písmeno zastupující konkrétní, ale obecně libovolné číslo — pro různá nastavení parametru dostaneme různá řešení.</p>
+
+    <h3>Postup</h3>
+    <ul>
+      <li>Uprav rovnici (roznásob závorky, zbav se zlomků).</li>
+      <li>Členy s $x$ na jednu stranu, ostatní na druhou.</li>
+      <li>Vytkni $x$ → dostaneš tvar <strong>(koeficient)·$x$ = (číslo)</strong>; koeficient i číslo mohou obsahovat parametr.</li>
+      <li><strong>Diskuse</strong> podle koeficientu u $x$:
+        <ul>
+          <li>koeficient $\ne 0$ → vyděl jím obě strany → jedno řešení;</li>
+          <li>koeficient $=0$ → dělit nelze; dosaď hodnotu parametru zpět: $0=0$ → nekonečně mnoho řešení ($x\in\mathbb{R}$), &nbsp;$0=$ nenulové číslo → $K=\emptyset$.</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="warn">Než vydělíš koeficientem u $x$, <strong>najdi hodnotu parametru, pro kterou je koeficient nulový</strong>, a tu řeš zvlášť. Dělení nulou je tady nejčastější chyba. Výsledek zapiš jako závěrečný přehled (tabulku).</div>
+
+    <div class="example">
+      <p><span class="label">Ukázka:</span> řeš rovnici $a\cdot x-3=x+a$ &nbsp;(neznámá $x$, parametr $a$).</p>
+      <div class="eq center">$ax-x=a+3 \;\Rightarrow\; (a-1)\cdot x=a+3$</div>
+      <p>Koeficient u $x$ je $(a-1)$ — nulový pro $a=1$.</p>
+      <p>$a\ne 1$: &nbsp;$x=\dfrac{a+3}{a-1}$. &nbsp;&nbsp; $a=1$: &nbsp;$(1-1)x=4 \Rightarrow 0=4$ → nepravda → $K=\emptyset$.</p>
+      <table>
+        <tr><th>Hodnota parametru $a$</th><th>Řešení pro $x$</th></tr>
+        <tr><td>$a\ne 1$</td><td>$x=\dfrac{a+3}{a-1}$</td></tr>
+        <tr><td>$a=1$</td><td>rovnice nemá řešení</td></tr>
+      </table>
+    </div>
+
+    <div class="flash-section" id="fc-s5">
+      <h3>Flashcards — procvič se</h3>
+      <p class="flash-note">Klikni na kartu pro odpověď. Každá karta má typ: <span style="color:var(--fc-K);font-weight:600">Konkrétní</span>, <span style="color:var(--fc-D);font-weight:600">Definiční</span>, <span style="color:var(--fc-P);font-weight:600">Postup</span>, <span style="color:var(--fc-W);font-weight:600">Pozor</span>.</p>
+      <div class="flash-deck">
+        <div class="flash-card" data-type="D" data-section="s5" data-card-idx="0" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Co je parametr v rovnici?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">Písmeno zastupující konkrétní, ale obecně libovolné číslo. Pro různá nastavení dostaneš různá řešení.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="D" data-section="s5" data-card-idx="1" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Jaký je rozdíl mezi neznámou a parametrem?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">Neznámou ($x$) hledáme; parametr je číslo, které se může měnit.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s5" data-card-idx="2" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak řešíš lineární rovnici s parametrem?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Upravíš ji, vytkneš $x$, dostaneš tvar (koeficient)·$x$ = (číslo) a diskutuješ podle koeficientu.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s5" data-card-idx="3" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Největší chyba u lineární rovnice s parametrem?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Vydělit koeficientem u $x$, aniž ověříš, že není nulový — dělení nulou.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s5" data-card-idx="4" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Vyšlo $(a-3)x=0$ a dosadíš $a=3$. Kolik je řešení?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">$0=0$ → nekonečně mnoho řešení, $x\in\mathbb{R}$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s5" data-card-idx="5" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">Vyšlo $(a-3)x=5$ a dosadíš $a=3$. Kolik je řešení?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">$0=5$ → žádné řešení, $K=\emptyset$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s5" data-card-idx="6" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Jak zapíšeš výsledek rovnice s parametrem?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">Závěrečným přehledem — tabulkou „hodnota parametru → řešení pro $x$“.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ================================================================= -->
+<!-- 6) KVADRATICKÁ ROVNICE S PARAMETREM                                 -->
+<!-- ================================================================= -->
+<details class="topic" id="s6">
+  <summary><span class="num">6)</span> Kvadratická rovnice s parametrem</summary>
+  <div class="content">
+
+    <div class="demo">
+      <span class="demo-title">Připomenutí — diskriminant</span>
+      <p>Pro $ax^2+bx+c=0$ &nbsp;($a\ne 0$): &nbsp; $D=b^2-4ac$.</p>
+      <p>$D>0$ → dvě různá reálná řešení · &nbsp;$D=0$ → jedno (dvojnásobné) $x=-\dfrac{b}{2a}$ · &nbsp;$D<0$ → žádné reálné řešení.</p>
+    </div>
+
+    <h3>Postup</h3>
+    <ul>
+      <li><strong>Je rovnice vůbec kvadratická?</strong> Koeficient u $x^2$ může být pro nějakou hodnotu parametru nulový → rovnice pak degeneruje na <strong>lineární</strong>. Tento případ vyřeš zvlášť.</li>
+      <li>Pro ostatní hodnoty parametru napiš diskriminant $D$ (bude obsahovat parametr).</li>
+      <li>Podle zadané podmínky: „dvě různá řešení" → $D>0$; &nbsp;„žádné řešení" → $D<0$; &nbsp;„právě jedno řešení" → $D=0$.</li>
+      <li>Vyřeš vzniklou nerovnici/rovnici pro parametr a sjednoť se závěrem o degeneraci.</li>
+    </ul>
+    <div class="warn">„Právě jeden kořen" není totéž co „$D=0$". Pokud koeficient u $x^2$ může být nulový, i degenerovaná <strong>lineární</strong> rovnice má právě jeden kořen — na ten se nesmí zapomenout.</div>
+
+    <div class="example">
+      <p><span class="label">Ukázka:</span> pro která $p$ má rovnice $(p-1)x^2+2x+3=0$ dvě různá reálná řešení?</p>
+      <p><strong>Krok 1.</strong> Koeficient u $x^2$ je $(p-1)$. Pro $p=1$ rovnice degeneruje: $2x+3=0 \Rightarrow x=-\tfrac{3}{2}$ — jen jedno řešení, ne dvě. $p=1$ vyřazujeme.</p>
+      <p><strong>Krok 2.</strong> Pro $p\ne 1$: &nbsp;$D=2^2-4(p-1)\cdot 3=16-12p$.</p>
+      <p><strong>Krok 3.</strong> Dvě různá řešení $\Leftrightarrow D>0$: &nbsp;$16-12p>0 \Rightarrow p<\tfrac{4}{3}$.</p>
+      <div class="eq center">Závěr: &nbsp;$p<\dfrac{4}{3}$ &nbsp;a zároveň &nbsp;$p\ne 1$.</div>
+    </div>
+
+    <div class="flash-section" id="fc-s6">
+      <h3>Flashcards — procvič se</h3>
+      <p class="flash-note">Klikni na kartu pro odpověď. Každá karta má typ: <span style="color:var(--fc-K);font-weight:600">Konkrétní</span>, <span style="color:var(--fc-D);font-weight:600">Definiční</span>, <span style="color:var(--fc-P);font-weight:600">Postup</span>, <span style="color:var(--fc-W);font-weight:600">Pozor</span>.</p>
+      <div class="flash-deck">
+        <div class="flash-card" data-type="D" data-section="s6" data-card-idx="0" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Jak zní vzorec pro diskriminant?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">$D=b^2-4ac$ pro rovnici $ax^2+bx+c=0$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="D" data-section="s6" data-card-idx="1" tabindex="0" role="button" aria-label="Flashcard Definiční">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-q">Co znamená $D>0$, $D=0$ a $D<0$?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Definiční</div>
+              <div class="fc-a">$D>0$ dvě různá řešení, $D=0$ jedno (dvojnásobné), $D<0$ žádné reálné.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s6" data-card-idx="2" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Co ověříš jako první u kvadratické rovnice s parametrem?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">Jestli koeficient u $x^2$ nemůže být nulový — pak rovnice degeneruje na lineární.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="W" data-section="s6" data-card-idx="3" tabindex="0" role="button" aria-label="Flashcard Pozor">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-q">Proč „právě jeden kořen“ není totéž co „$D=0$“?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Pozor</div>
+              <div class="fc-a">I degenerovaná lineární rovnice (koeficient u $x^2$ je nulový) má právě jeden kořen.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s6" data-card-idx="4" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Rovnice má mít dvě různá reálná řešení. Jakou podmínku napíšeš?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">$D>0$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="P" data-section="s6" data-card-idx="5" tabindex="0" role="button" aria-label="Flashcard Postup">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Postup</div>
+              <div class="fc-q">Rovnice nemá mít žádné reálné řešení. Jakou podmínku napíšeš?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Postup</div>
+              <div class="fc-a">$D<0$.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flash-card" data-type="K" data-section="s6" data-card-idx="6" tabindex="0" role="button" aria-label="Flashcard Konkrétní">
+          <div class="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-q">$x^2-6x+p=0$. Pro jaké $p$ má rovnice dvojnásobný kořen?</div>
+              <div class="fc-hint">klikni pro odpověď</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-type">Konkrétní</div>
+              <div class="fc-a">$D=0$: &nbsp;$36-4p=0 \Rightarrow p=9$.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ================================================================= -->
+<!-- TIPY                                                                -->
+<!-- ================================================================= -->
+<details class="topic" id="stips">
+  <summary><span class="num">✓</span> Obecné tipy do písemky</summary>
+  <div class="content">
+    <ul>
+      <li><strong>Podmínky</strong> a definiční obory piš hned na začátku (odmocniny $\ge 0$, jmenovatele $\ne 0$), ne až na konci.</li>
+      <li><strong>Iracionální rovnice:</strong> zkouška je povinná, je součástí řešení.</li>
+      <li><strong>Substituce:</strong> vrať se od pomocné neznámé k původní; u $y=x^2$ zahoď záporná $y$.</li>
+      <li><strong>Soustavy:</strong> každou rovnici nejdřív zjednoduš. Výsledek piš ve správné notaci: $K=\{[x;y]\}$, $K=\{[x;y;z]\}$.</li>
+      <li><strong>Rovnice s parametrem:</strong> nikdy neděl koeficientem, dokud neověříš, že není nulový. Vždy napiš závěrečný přehled.</li>
+      <li><strong>Kvadratika s parametrem:</strong> zkontroluj, jestli rovnice nemůže degenerovat na lineární.</li>
+      <li>Když na něco nemáš čas, napiš alespoň <strong>postup</strong> a podmínky — lepší než prázdný list.</li>
+    </ul>
+  </div>
+</details>
+
+</main>
+
+<footer>
+  Cheatsheet k 4. čtvrtletní písemné práci · kvinta · matematika · Ondřej Hospodka<br>
+  Ukázkové příklady jsou ilustrativní a originální — neodpovídají úlohám v písemce.
+</footer>
+
+<!-- Flashcard modal -->
+<div class="fc-modal" id="fcModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="fc-modal-card">
+    <div class="fc-section-ref" id="fcModalSection"></div>
+    <div class="fc-type" id="fcModalType"></div>
+    <div class="fc-q" id="fcModalQ"></div>
+    <div class="fc-a" id="fcModalA"></div>
+    <div class="fc-modal-actions">
+      <button id="fcModalReveal" class="primary">Zobrazit odpověď</button>
+      <button id="fcModalNext">🎲 Další</button>
+      <button id="fcModalClose">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<script id="fcData" type="application/json">[{"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 0, "type": "D", "typeLabel": "Definiční", "q": "Co je iracionální rovnice?", "a": "Rovnice, ve které se neznámá vyskytuje pod odmocninou."}, {"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 1, "type": "W", "typeLabel": "Pozor", "q": "Proč umocnění obou stran není ekvivalentní úprava?", "a": "Může přidat falešné kořeny — z nepravdivého $2=-2$ vznikne umocněním pravdivé $4=4$."}, {"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 2, "type": "W", "typeLabel": "Pozor", "q": "Je u iracionální rovnice zkouška povinná?", "a": "Ano — je součástí řešení. Bez ní neodhalíš falešné kořeny."}, {"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 3, "type": "P", "typeLabel": "Postup", "q": "Jak postupuješ u rovnice se dvěma odmocninami?", "a": "Osamostatníš jednu odmocninu a umocníš; pak osamostatníš zbylou odmocninu a umocníš znovu."}, {"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 4, "type": "K", "typeLabel": "Konkrétní", "q": "Má rovnice $\\sqrt{x+1}=-2$ řešení?", "a": "Ne — odmocnina je vždy $\\ge 0$, nemůže se rovnat zápornému číslu. $K=\\emptyset$."}, {"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 5, "type": "K", "typeLabel": "Konkrétní", "q": "Po umocnění vyšlo $x=2$ i $x=5$; zkouška projde jen pro $x=5$. Co s $x=2$?", "a": "Je to falešný kořen — vyřadíš ho."}, {"section": "s1", "sectionTitle": "Iracionální rovnice", "idx": 6, "type": "P", "typeLabel": "Postup", "q": "Jaký je první krok u rovnice $\\sqrt{2x-1}=x-2$?", "a": "Odmocnina už je osamostatněná — umocníš obě strany: $2x-1=(x-2)^2$."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 0, "type": "D", "typeLabel": "Definiční", "q": "Co je substituce?", "a": "Zavedení nové neznámé za opakující se výraz — složitá rovnice se zjednoduší, obvykle na kvadratickou."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 1, "type": "P", "typeLabel": "Postup", "q": "Jak řešíš bikvadratickou rovnici $ax^4+bx^2+c=0$?", "a": "Substituce $y=x^2$, vyřešíš kvadratickou rovnici v $y$, vrátíš se: $x=\\pm\\sqrt{y}$."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 2, "type": "W", "typeLabel": "Pozor", "q": "Co uděláš, když u substituce $y=x^2$ vyjde $y<0$?", "a": "Zahodíš ho — $x^2$ nemůže být záporné, reálné $x$ neexistuje."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 3, "type": "W", "typeLabel": "Pozor", "q": "Nejčastější chyba u substituce?", "a": "Zapomenout se vrátit od pomocné neznámé $y$ k původní $x$. $y$ není konečná odpověď."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 4, "type": "K", "typeLabel": "Konkrétní", "q": "Substituce $y=x^2$ dala $y=16$. Jaká jsou $x$?", "a": "$x=4$ a $x=-4$."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 5, "type": "K", "typeLabel": "Konkrétní", "q": "Bikvadratická rovnice má v $y$ dva různé kladné kořeny. Kolik řešení v $x$?", "a": "Čtyři — ke každému $y$ patří $\\pm\\sqrt{y}$."}, {"section": "s2", "sectionTitle": "Substituce", "idx": 6, "type": "P", "typeLabel": "Postup", "q": "Jak poznáš, co v rovnici substituovat?", "a": "Hledáš výraz, který se v rovnici opakuje — závorku, zlomek, odmocninu."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 0, "type": "D", "typeLabel": "Definiční", "q": "Jaké jsou tři metody řešení soustavy dvou rovnic o dvou neznámých?", "a": "Dosazovací, srovnávací a sčítací."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 1, "type": "P", "typeLabel": "Postup", "q": "Co je cílem Gaussovy eliminace?", "a": "Dostat soustavu do schodovitého (trojúhelníkového) tvaru — poslední rovnice pak má jen jednu neznámou."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 2, "type": "K", "typeLabel": "Konkrétní", "q": "Při řešení soustavy vyjde $0=0$. Co to znamená?", "a": "Soustava má nekonečně mnoho řešení."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 3, "type": "K", "typeLabel": "Konkrétní", "q": "Při řešení soustavy vyjde $0=5$. Co to znamená?", "a": "Soustava nemá řešení, $K=\\emptyset$."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 4, "type": "P", "typeLabel": "Postup", "q": "Jak řešíš tři rovnice o dvou neznámých?", "a": "Vyřešíš soustavu ze dvou rovnic, výsledek dosadíš do třetí. Sedí → platí; nesedí → řešení není."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 5, "type": "P", "typeLabel": "Postup", "q": "Jak řešíš dvě rovnice o třech neznámých?", "a": "Jednu neznámou zvolíš jako parametr, ostatní vyjádříš pomocí něj — nekonečně mnoho řešení."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 6, "type": "W", "typeLabel": "Pozor", "q": "Co uděláš s každou rovnicí, než zvolíš metodu?", "a": "Zjednodušíš ji — roznásobíš závorky, zbavíš se zlomků, sečteš stejné členy."}, {"section": "s3", "sectionTitle": "Soustavy lineárních rovnic", "idx": 7, "type": "D", "typeLabel": "Definiční", "q": "Jak zapíšeš výsledek soustavy tří rovnic o třech neznámých?", "a": "$K=\\{[x;y;z]\\}$."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 0, "type": "P", "typeLabel": "Postup", "q": "Soustava přímka + kuželosečka — z které rovnice vyjadřuješ neznámou?", "a": "Z lineární — dosazením vznikne jedna pěkná kvadratická rovnice o jedné neznámé."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 1, "type": "K", "typeLabel": "Konkrétní", "q": "Kolik řešení může mít soustava přímka + kružnice?", "a": "0, 1 nebo 2 dvojice — geometricky kolikrát přímka protne kružnici."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 2, "type": "D", "typeLabel": "Definiční", "q": "Co znamená $|A|$ při řešení soustavy?", "a": "Dva případy: pro $A\\ge 0$ je $|A|=A$, pro $A<0$ je $|A|=-A$."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 3, "type": "P", "typeLabel": "Postup", "q": "Jak řešíš soustavu s absolutní hodnotou?", "a": "Rozdělíš na případy podle znaménka výrazu uvnitř $|\\cdot|$, každý vyřešíš a ověříš podmínku případu."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 4, "type": "W", "typeLabel": "Pozor", "q": "Co s výsledkem, který nesplňuje podmínku svého případu?", "a": "Vyřadíš ho — do daného případu nepatří, i když čísla „vyšla“."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 5, "type": "K", "typeLabel": "Konkrétní", "q": "V případu $x\\ge 0$ vyšlo $x=-4$. Platí toto řešení?", "a": "Ne — nesplňuje podmínku $x\\ge 0$, do tohoto případu nepatří."}, {"section": "s4", "sectionTitle": "Soustavy nelineární", "idx": 6, "type": "W", "typeLabel": "Pozor", "q": "Z které rovnice u soustavy přímka + kvadratika nevyjadřovat?", "a": "Z kvadratické — vznikl by chaos. Vždy vyjadřuj z lineární rovnice."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 0, "type": "D", "typeLabel": "Definiční", "q": "Co je parametr v rovnici?", "a": "Písmeno zastupující konkrétní, ale obecně libovolné číslo. Pro různá nastavení dostaneš různá řešení."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 1, "type": "D", "typeLabel": "Definiční", "q": "Jaký je rozdíl mezi neznámou a parametrem?", "a": "Neznámou ($x$) hledáme; parametr je číslo, které se může měnit."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 2, "type": "P", "typeLabel": "Postup", "q": "Jak řešíš lineární rovnici s parametrem?", "a": "Upravíš ji, vytkneš $x$, dostaneš tvar (koeficient)·$x$ = (číslo) a diskutuješ podle koeficientu."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 3, "type": "W", "typeLabel": "Pozor", "q": "Největší chyba u lineární rovnice s parametrem?", "a": "Vydělit koeficientem u $x$, aniž ověříš, že není nulový — dělení nulou."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 4, "type": "K", "typeLabel": "Konkrétní", "q": "Vyšlo $(a-3)x=0$ a dosadíš $a=3$. Kolik je řešení?", "a": "$0=0$ → nekonečně mnoho řešení, $x\\in\\mathbb{R}$."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 5, "type": "K", "typeLabel": "Konkrétní", "q": "Vyšlo $(a-3)x=5$ a dosadíš $a=3$. Kolik je řešení?", "a": "$0=5$ → žádné řešení, $K=\\emptyset$."}, {"section": "s5", "sectionTitle": "Lineární rovnice s parametrem", "idx": 6, "type": "P", "typeLabel": "Postup", "q": "Jak zapíšeš výsledek rovnice s parametrem?", "a": "Závěrečným přehledem — tabulkou „hodnota parametru → řešení pro $x$“."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 0, "type": "D", "typeLabel": "Definiční", "q": "Jak zní vzorec pro diskriminant?", "a": "$D=b^2-4ac$ pro rovnici $ax^2+bx+c=0$."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 1, "type": "D", "typeLabel": "Definiční", "q": "Co znamená $D>0$, $D=0$ a $D<0$?", "a": "$D>0$ dvě různá řešení, $D=0$ jedno (dvojnásobné), $D<0$ žádné reálné."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 2, "type": "W", "typeLabel": "Pozor", "q": "Co ověříš jako první u kvadratické rovnice s parametrem?", "a": "Jestli koeficient u $x^2$ nemůže být nulový — pak rovnice degeneruje na lineární."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 3, "type": "W", "typeLabel": "Pozor", "q": "Proč „právě jeden kořen“ není totéž co „$D=0$“?", "a": "I degenerovaná lineární rovnice (koeficient u $x^2$ je nulový) má právě jeden kořen."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 4, "type": "P", "typeLabel": "Postup", "q": "Rovnice má mít dvě různá reálná řešení. Jakou podmínku napíšeš?", "a": "$D>0$."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 5, "type": "P", "typeLabel": "Postup", "q": "Rovnice nemá mít žádné reálné řešení. Jakou podmínku napíšeš?", "a": "$D<0$."}, {"section": "s6", "sectionTitle": "Kvadratická rovnice s parametrem", "idx": 6, "type": "K", "typeLabel": "Konkrétní", "q": "$x^2-6x+p=0$. Pro jaké $p$ má rovnice dvojnásobný kořen?", "a": "$D=0$: &nbsp;$36-4p=0 \\Rightarrow p=9$."}]</script>
+
+<script>
+(function() {
+  var TYPE_COLORS = { K: 'var(--fc-K)', D: 'var(--fc-D)', P: 'var(--fc-P)', W: 'var(--fc-W)' };
+  var SECTION_NUMS = { s1:'1', s2:'2', s3:'3', s4:'4', s5:'5', s6:'6' };
+
+  function renderMath(el) {
+    if (window.renderMathInElement) {
+      try {
+        renderMathInElement(el, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$',  right: '$',  display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      } catch(e) { /* ignore */ }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // --- Inline flashcard flip ---
+    document.querySelectorAll('.flash-card').forEach(function(card) {
+      function toggle() { card.classList.toggle('flipped'); }
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    // --- Random modal ---
+    var dataEl = document.getElementById('fcData');
+    var deck = [];
+    try { deck = JSON.parse(dataEl.textContent || '[]'); } catch(e) { deck = []; }
+
+    var modal = document.getElementById('fcModal');
+    var secEl = document.getElementById('fcModalSection');
+    var typeEl = document.getElementById('fcModalType');
+    var qEl = document.getElementById('fcModalQ');
+    var aEl = document.getElementById('fcModalA');
+    var btnReveal = document.getElementById('fcModalReveal');
+    var btnNext = document.getElementById('fcModalNext');
+    var btnClose = document.getElementById('fcModalClose');
+    var btnOpen = document.getElementById('fcRandomBtn');
+
+    var lastIdx = -1;
+
+    function pickRandom() {
+      if (!deck.length) return;
+      var idx;
+      if (deck.length === 1) idx = 0;
+      else { do { idx = Math.floor(Math.random() * deck.length); } while (idx === lastIdx); }
+      lastIdx = idx;
+      var c = deck[idx];
+      secEl.textContent = 'Sekce ' + (SECTION_NUMS[c.section] || c.section) + ' · ' + c.sectionTitle;
+      typeEl.textContent = c.typeLabel;
+      typeEl.style.color = TYPE_COLORS[c.type] || 'inherit';
+      qEl.innerHTML = c.q;
+      aEl.innerHTML = c.a;
+      aEl.classList.remove('show');
+      btnReveal.textContent = 'Zobrazit odpověď';
+      renderMath(qEl);
+    }
+
+    function openModal() {
+      pickRandom();
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (btnOpen) btnOpen.addEventListener('click', openModal);
+    btnNext.addEventListener('click', pickRandom);
+    btnClose.addEventListener('click', closeModal);
+    btnReveal.addEventListener('click', function() {
+      if (aEl.classList.contains('show')) {
+        aEl.classList.remove('show');
+        btnReveal.textContent = 'Zobrazit odpověď';
+      } else {
+        aEl.classList.add('show');
+        renderMath(aEl);
+        btnReveal.textContent = 'Skrýt odpověď';
+      }
+    });
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      else if (e.key === 'Enter') { e.preventDefault(); pickRandom(); }
+      else if (e.key === ' ') { e.preventDefault(); btnReveal.click(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
